@@ -15,6 +15,32 @@
             font-family: 'Inter', sans-serif;
         }
 
+        /* Mobile header shadow */
+        @media (max-width: 767px) {
+            header::after {
+                content: '';
+                position: absolute;
+                bottom: -6px;
+                left: 0;
+                right: 0;
+                height: 13px;
+                background: linear-gradient(to bottom, rgb(0 0 0 / 13%), transparent);
+            }
+        }
+
+        /* Collections expand animation */
+        #moreCollections {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        #moreCollections.show {
+            max-height: 5000px;
+            opacity: 1;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
         .swiper {
             width: 100%;
             height: 100%;
@@ -45,25 +71,27 @@
             position: relative;
         }
 
-        .heroSwiper::before,
-        .heroSwiper::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 80px;
-            z-index: 10;
-            pointer-events: none;
-        }
+        @media (min-width: 768px) {
+            .heroSwiper::before,
+            .heroSwiper::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 80px;
+                z-index: 10;
+                pointer-events: none;
+            }
 
-        .heroSwiper::before {
-            left: 0;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3), transparent);
-        }
+            .heroSwiper::before {
+                left: 0;
+                background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3), transparent);
+            }
 
-        .heroSwiper::after {
-            right: 0;
-            background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3), transparent);
+            .heroSwiper::after {
+                right: 0;
+                background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3), transparent);
+            }
         }
 
         .heroSwiper .swiper-slide {
@@ -81,10 +109,6 @@
         .heroSwiper .swiper-slide:not(.swiper-slide-active) {
             opacity: 0.25;
             pointer-events: none;
-        }
-
-        .heroSwiper .swiper-slide-active {
-            opacity: 1;
         }
 
         .heroSwiper .swiper-button-next,
@@ -174,8 +198,74 @@
     <!-- Catalog Overlay -->
     <div class="catalog-overlay" id="catalogOverlay"></div>
 
-    <!-- Header -->
-    <header class="bg-white border-b border-gray-200 relative">
+    <!-- Responsive Header -->
+    <header class="bg-white relative" style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.13);">
+        <!-- Mobile Header (< 768px) -->
+        <div class="md:hidden flex items-center justify-between px-4" style="height: 98px;">
+            <!-- Left: Logo -->
+            <div class="flex-shrink-0">
+                <img src="images/logo.svg" alt="Fashion Stories" class="h-14">
+            </div>
+
+            <!-- Right: Icons + Hamburger -->
+            <div class="flex items-center gap-3">
+                <!-- Search Icon -->
+                <button id="mobileSearchButton" class="text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+
+                <!-- User Icon -->
+                <button class="text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </button>
+
+                <!-- Wishlist Icon -->
+                <button class="text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </button>
+
+                <!-- Cart Icon with RED Badge -->
+                <button class="text-gray-700 relative">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span class="absolute -top-1 -right-1 bg-[#E85D75] text-white text-xs rounded-full flex items-center justify-center font-semibold" style="width: 19px; height: 19px; font-size: 11px;">1</span>
+                </button>
+
+                <!-- Hamburger Menu -->
+                <button id="mobileMenuButton" class="text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Search Bar (Hidden by default) -->
+        <div id="mobileSearchBar" class="hidden md:hidden bg-white px-4 py-4 border-t border-gray-200">
+            <div class="relative">
+                <input
+                    type="text"
+                    placeholder="Искать бижутерии или аксессуары"
+                    class="w-full px-6 py-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:border-gray-400"
+                    style="background-color: #F5F5F5;"
+                >
+                <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Desktop Header (>= 768px) -->
+        <div class="hidden md:block border-b border-gray-200">
         <!-- Top Bar -->
         <div class="max-w-[2400px] mx-auto px-12 py-5">
             <div class="flex items-center justify-between relative">
@@ -312,6 +402,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </header>
 
     <!-- Main Hero Slider -->
@@ -378,17 +469,26 @@
     </section>
 
     <!-- Collections Section -->
-    <section class="py-16 overflow-hidden" style="background-color: #EBEBEC;">
-        <div class="max-w-[2400px] mx-auto px-12">
-            <div class="flex items-center justify-between mb-12">
+    <section id="collectionsSection" class="py-16 overflow-hidden" style="background-color: #EBEBEC;">
+        <div class="max-w-[2400px] mx-auto px-6 md:px-12">
+            <!-- Desktop Header -->
+            <div class="hidden md:flex items-center justify-between mb-12">
                 <h2 class="text-4xl font-light uppercase">Коллекции бижутерии</h2>
                 <a href="#" class="bg-gray-600 text-white px-12 py-4 rounded-full font-semibold hover:bg-gray-700 transition-colors text-sm">
                     СМОТРЕТЬ ВСЕ КОЛЛЕКЦИИ
                 </a>
             </div>
 
+            <!-- Mobile Header -->
+            <div class="md:hidden text-center mb-8">
+                <h2 class="text-2xl font-bold uppercase mb-6">КОЛЛЕКЦИИ БИЖУТЕРИИ</h2>
+                <a href="#" class="inline-block bg-gray-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-700 transition-colors text-sm">
+                    СМОТРЕТЬ ВСЕ КОЛЛЕКЦИИ
+                </a>
+            </div>
+
             <!-- Collections Slider -->
-            <div class="flex items-center gap-6">
+            <div class="hidden md:flex items-center gap-6">
                 <!-- Navigation Arrows (Left Side) -->
                 <div class="flex flex-col gap-4 flex-shrink-0 z-20 relative">
                     <!-- Next Arrow (Top) -->
@@ -513,6 +613,111 @@
                     </div>
                 </div>
                 </div>
+            </div>
+
+            <!-- Mobile List -->
+            <div class="md:hidden space-y-8">
+                <!-- Card 1 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-3xl h-[400px] mb-4">
+                        <span class="absolute top-6 left-6 bg-white text-gray-900 px-4 py-2 text-xs font-bold z-10 rounded uppercase">Sale</span>
+                        <img src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=800&h=600&fit=crop" alt="Гаваи летний вайб" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <h3 class="text-white text-2xl font-bold mb-4 uppercase leading-tight">ГАВАИ<br>ЛЕТНИЙ ВАЙБ</h3>
+                            <button class="w-full border border-white bg-white text-gray-900 py-3 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm">
+                                ПЕРЕЙТИ В КАТАЛОГ
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 text-sm leading-relaxed">Окунитесь в атмосферу тропиков с коллекцией, которая наполняет каждый образ легкостью и солнечным настроением.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-3xl h-[400px] mb-4">
+                        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&h=600&fit=crop" alt="Великолепный век" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <h3 class="text-white text-2xl font-bold mb-4 uppercase leading-tight">ВЕЛИКОЛЕПНЫЙ<br>ВЕК</h3>
+                            <button class="w-full border border-white bg-white text-gray-900 py-3 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm">
+                                ПЕРЕЙТИ В КАТАЛОГ
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 text-sm leading-relaxed">"Великолепный Век — восточная роскошь!" Эта коллекция погружает в мир дворцовой роскоши Османской империи.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-3xl h-[400px] mb-4">
+                        <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&h=600&fit=crop" alt="Морской бриз" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <h3 class="text-white text-2xl font-bold mb-4 uppercase leading-tight">МОРСКОЙ<br>БРИЗ</h3>
+                            <button class="w-full border border-white bg-white text-gray-900 py-3 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm">
+                                ПЕРЕЙТИ В КАТАЛОГ
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 text-sm leading-relaxed">Свежий морской стиль с нотками средиземноморского шарма для создания незабываемых образов.</p>
+                </div>
+
+                <!-- Hidden Cards -->
+                <div id="moreCollections" class="space-y-8">
+                    <!-- Card 4 -->
+                    <div class="group cursor-pointer">
+                        <div class="relative overflow-hidden rounded-3xl h-[400px] mb-4">
+                            <img src="https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=800&h=600&fit=crop" alt="Природная симфония" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <h3 class="text-white text-2xl font-bold mb-4 uppercase leading-tight">ПРИРОДНАЯ<br>СИМФОНИЯ</h3>
+                                <button class="w-full border border-white bg-white text-gray-900 py-3 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm">
+                                    ПЕРЕЙТИ В КАТАЛОГ
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-sm leading-relaxed">Коллекция "Природная симфония" - это трендовые украшения сезона, вдохновленные природой и этническими мотивами.</p>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="group cursor-pointer">
+                        <div class="relative overflow-hidden rounded-3xl h-[400px] mb-4">
+                            <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&h=600&fit=crop" alt="Нежная брутальность" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <h3 class="text-white text-2xl font-bold mb-4 uppercase leading-tight">НЕЖНАЯ<br>БРУТАЛЬНОСТЬ</h3>
+                                <button class="w-full border border-white bg-white text-gray-900 py-3 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm">
+                                    ПЕРЕЙТИ В КАТАЛОГ
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-sm leading-relaxed">Коллекция "Нежная брутальность" – это игра на контрасте, где сила и грация сочетаются в каждом изделии.</p>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="group cursor-pointer">
+                        <div class="relative overflow-hidden rounded-3xl h-[400px] mb-4">
+                            <img src="https://images.unsplash.com/photo-1583292650898-7d22cd27ca6f?w=800&h=600&fit=crop" alt="Городской шик" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <h3 class="text-white text-2xl font-bold mb-4 uppercase leading-tight">ГОРОДСКОЙ<br>ШИК</h3>
+                                <button class="w-full border border-white bg-white text-gray-900 py-3 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm">
+                                    ПЕРЕЙТИ В КАТАЛОГ
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-sm leading-relaxed">Современные украшения для уверенных женщин, которые ценят стиль и комфорт в городском ритме.</p>
+                    </div>
+                </div>
+
+                <!-- Show More Button -->
+                <button id="showMoreCollections" class="w-full bg-gray-300 text-gray-900 py-4 rounded-full font-bold hover:bg-gray-400 transition-colors text-sm uppercase flex items-center justify-center gap-2">
+                    РАСКРЫТЬ ЕЩЕ
+                    <svg class="w-5 h-5 transform transition-transform" id="showMoreIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
@@ -931,13 +1136,18 @@
 
     <!-- Footer -->
     <footer class="text-gray-900 relative" style="background: linear-gradient(180deg, rgba(127, 127, 132, 0.1) 0%, rgba(127, 127, 132, 0.1) 12px, #EDEDED 12px);">
-        <div class="max-w-[2400px] mx-auto px-12 pt-20 pb-12">
-            <!-- Logo in white box - positioned absolutely -->
-            <div class="top-0 bg-white flex items-center justify-center" style="width: 334px; height: 348px; float: left; position: relative; top: -68px;">
+        <div class="max-w-[2400px] mx-auto px-6 md:px-12 pt-12 md:pt-20 pb-12">
+            <!-- Desktop Logo in white box -->
+            <div class="hidden md:block top-0 bg-white flex items-center justify-center" style="width: 334px; height: 348px; float: left; position: relative; top: -68px;">
                 <img src="images/footer-logo.svg" alt="Fashion Stories" style="width: 294px; height: auto;">
             </div>
 
-            <div class="grid grid-cols-4 gap-16 mb-12 ml-auto" style="max-width: calc(100% - 334px - 64px);">
+            <!-- Mobile Logo -->
+            <div class="md:hidden bg-white flex items-center justify-center mx-auto mb-8" style="width: 280px; height: 280px; border: 2px solid #000;">
+                <img src="images/footer-logo.svg" alt="Fashion Stories" style="width: 240px; height: auto;">
+            </div>
+
+            <div class="hidden md:grid grid-cols-4 gap-16 mb-12 ml-auto" style="max-width: calc(100% - 334px - 64px);">
 
 
                 <!-- Покупателям -->
@@ -996,11 +1206,37 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Mobile Contact Info -->
+            <div class="md:hidden text-center space-y-4">
+                <a href="tel:+79251489052" class="text-2xl font-bold block" style="color: #242427;">+7 (925) 148 90 52</a>
+                <a href="mailto:contact@fashion-stories.ru" class="text-sm font-medium block" style="color: #242427;">contact@fashion-stories.ru</a>
+                <p class="text-base font-medium" style="color: #242427;">г. Москва, ул. Большая Новодмитровская, д.23, стр.6, 1 этаж, комната 1</p>
+                <p class="text-sm font-medium" style="color: #66666B;">Время работы Шоу-рум:<br>пн-пт с 9:00 до 18:00</p>
+
+                <!-- Mobile Social Buttons -->
+                <div class="flex gap-3 items-center justify-center pt-4">
+                    <a href="#" class="flex items-center justify-between font-bold border px-4 py-2" style="border-color: #242427; color: #242427; border-radius: 22px; font-size: 15px;">
+                        <span class="mr-3">ТГ канал для партнеров</span>
+                        <div class="flex items-center justify-center rounded-full" style="background-color: #242427; width: 29px; height: 29px;">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                            </svg>
+                        </div>
+                    </a>
+                    <a href="#" style="color: #242427;">
+                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div style="background-color: rgba(102, 102, 107, 0.08);">
-            <div class="max-w-[2400px] mx-auto px-4 lg:px-12 py-4 lg:py-6">
-                <div class="flex items-center justify-between flex-wrap gap-2 lg:gap-4">
+            <div class="max-w-[2400px] mx-auto px-4 lg:px-12 py-6 lg:py-6">
+                <!-- Desktop Layout -->
+                <div class="hidden md:flex items-center justify-between flex-wrap gap-2 lg:gap-4">
                     <div class="flex items-center gap-2 lg:gap-6 text-[10px] lg:text-[14px] font-normal flex-wrap" style="color: #242427;">
                         <span class="whitespace-nowrap">© 2022-2025 OOO "Модные истории". Все права защищены.</span>
                         <a href="#" class="hover:opacity-70 transition-opacity whitespace-nowrap">Политика конфиденциальности</a>
@@ -1014,9 +1250,43 @@
                         <img src="images/banks.png" alt="Payment methods" style="height: 1.1rem;">
                     </div>
                 </div>
+
+                <!-- Mobile Layout -->
+                <div class="md:hidden text-center space-y-4">
+                    <div class="text-xs font-normal" style="color: #242427;">
+                        <p class="mb-3">© 2022-2025<br>OOO "Модные истории".<br>Все права защищены.</p>
+                    </div>
+                    <div class="flex flex-col gap-2 text-xs font-normal" style="color: #242427;">
+                        <a href="#" class="hover:opacity-70 transition-opacity">Политика конфиденциальности</a>
+                        <a href="#" class="hover:opacity-70 transition-opacity">Условия обработки ПДн</a>
+                        <a href="#" class="hover:opacity-70 transition-opacity">Публичная оферта</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="hidden fixed inset-0 z-50">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="absolute left-0 top-0 bottom-0 w-4/5 bg-white overflow-y-auto">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                <img src="images/logo.svg" alt="Fashion Stories" class="h-12">
+                <button id="closeMobileMenu" class="text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="p-6" id="mobileMenuContent">
+                <!-- Content will be dynamically inserted from desktop catalog -->
+            </nav>
+            <div class="p-6 border-t border-gray-200">
+                <p class="text-sm mb-2 text-gray-600">Свяжитесь с нами:</p>
+                <a href="tel:+77777777777" class="text-lg font-semibold text-gray-900 hover:text-gray-600">+7 (777) 777-77-77</a>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Catalog Menu Toggle
@@ -1140,6 +1410,45 @@
             },
         });
 
+        // Show More Collections Button
+        const showMoreCollections = document.getElementById('showMoreCollections');
+        const moreCollections = document.getElementById('moreCollections');
+        const collectionsSection = document.getElementById('collectionsSection');
+
+        if (showMoreCollections && moreCollections && collectionsSection) {
+            showMoreCollections.addEventListener('click', () => {
+                const isExpanded = moreCollections.classList.contains('show');
+
+                if (!isExpanded) {
+                    // Раскрыть с анимацией
+                    moreCollections.classList.add('show');
+                    showMoreCollections.innerHTML = `
+                        СКРЫТЬ
+                        <svg class="w-5 h-5 transform rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    `;
+
+                    // Плавная прокрутка к раскрытому контенту
+                    setTimeout(() => {
+                        moreCollections.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                } else {
+                    // Закрыть мгновенно
+                    moreCollections.classList.remove('show');
+                    showMoreCollections.innerHTML = `
+                        РАСКРЫТЬ ЕЩЕ
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    `;
+
+                    // Прокрутка к началу секции коллекций
+                    collectionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+
         // Trends Slider
         const trendsSwiper = new Swiper('.trendsSwiper', {
             slidesPerView: 1.2,
@@ -1235,6 +1544,99 @@
                     left: 200,
                     behavior: 'smooth'
                 });
+            });
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenuContent = document.getElementById('mobileMenuContent');
+
+        // Copy catalog menu structure to mobile menu on load
+        if (mobileMenuContent && catalogMenu) {
+            const catalogGrid = catalogMenu.querySelector('.grid');
+            if (catalogGrid) {
+                const columns = catalogGrid.querySelectorAll('.grid > div');
+
+                columns.forEach(column => {
+                    const columnClone = column.cloneNode(true);
+                    columnClone.classList.add('mb-4', 'border-b', 'border-gray-200', 'pb-4');
+
+                    // Update heading styles for mobile and make it clickable
+                    const heading = columnClone.querySelector('h3');
+                    if (heading) {
+                        heading.classList.remove('text-lg', 'mb-6');
+                        heading.classList.add('text-base', 'mb-0', 'cursor-pointer', 'flex', 'items-center', 'justify-between', 'py-3');
+
+                        // Add arrow icon
+                        const arrow = document.createElement('svg');
+                        arrow.classList.add('w-5', 'h-5', 'transform', 'transition-transform', 'duration-200');
+                        arrow.setAttribute('fill', 'none');
+                        arrow.setAttribute('stroke', 'currentColor');
+                        arrow.setAttribute('viewBox', '0 0 24 24');
+                        arrow.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>';
+                        heading.appendChild(arrow);
+                    }
+
+                    // Update list styles for mobile and hide by default
+                    const ul = columnClone.querySelector('ul');
+                    if (ul) {
+                        ul.classList.remove('text-sm', 'space-y-3');
+                        ul.classList.add('text-sm', 'space-y-2', 'hidden', 'mt-2');
+                    }
+
+                    // Add click handler for accordion
+                    if (heading && ul) {
+                        heading.addEventListener('click', () => {
+                            const isHidden = ul.classList.contains('hidden');
+
+                            if (isHidden) {
+                                ul.classList.remove('hidden');
+                                const arrow = heading.querySelector('svg');
+                                if (arrow) arrow.classList.add('rotate-180');
+                            } else {
+                                ul.classList.add('hidden');
+                                const arrow = heading.querySelector('svg');
+                                if (arrow) arrow.classList.remove('rotate-180');
+                            }
+                        });
+                    }
+
+                    mobileMenuContent.appendChild(columnClone);
+                });
+            }
+        }
+
+        // Mobile Search Toggle
+        const mobileSearchButton = document.getElementById('mobileSearchButton');
+        const mobileSearchBar = document.getElementById('mobileSearchBar');
+
+        if (mobileSearchButton && mobileSearchBar) {
+            mobileSearchButton.addEventListener('click', () => {
+                mobileSearchBar.classList.toggle('hidden');
+            });
+        }
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+
+            if (closeMobileMenu) {
+                closeMobileMenu.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    document.body.style.overflow = '';
+                });
+            }
+
+            // Close on overlay click
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target === mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }
             });
         }
     </script>
